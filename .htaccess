@@ -1,0 +1,6 @@
+<RequireAll>
+    Require all granted
+	Require ip 127.0.0.1 10.10.0.70 10.10.8.61
+	#Require ip 10.10.8.61
+    #Require not ip 10.10.8.0/22
+</RequireAll>
