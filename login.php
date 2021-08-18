@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-
+//$arr=array('q'=>'q','z'=>'z');
 
             if (isset($_POST['user_name']) && !empty($_POST['user_name']) 
                && !empty($_POST['password'])) {
@@ -10,9 +10,9 @@ session_start();
                   $_POST['password'] == 'q') {
                   $_SESSION['user_name'] = 'q';
 				  $_SESSION['start']=time();
-                   header("Location:dinner.php");
+                   header("Location:index.html");
                }else {
-                  echo 'Не верное имя пользователя';
+                  echo 'Неверное имя пользователя';
                }
             }
 			

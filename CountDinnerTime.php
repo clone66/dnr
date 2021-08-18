@@ -12,7 +12,9 @@
 	float:left;position:relative;top:20px;
 	
 }
-		
+	body:{
+		margin:0;
+	}	
         </style>
 
 		<script type="text/javascript" src="js/tcal_en.js"></script> 
@@ -25,12 +27,12 @@ include('F:\web\htdocs\st\head.php');
 ini_set('display_errors',0);
 error_reporting(E_ALL);
 $date=$_GET['TimeVal'];
-$tsql="SELECT ID,Remark,DoorIndex,TimeVal,HozOrgan,OwnerName
+$tsql="SELECT top 55 ID,Remark,DoorIndex,TimeVal,HozOrgan,OwnerName
 FROM dbo.pLogData join pMark on pLogData.HozOrgan=pMark.Owner
 where DoorIndex=36 and TimeVal >='$date[0]' and TimeVal<='$date[1] 23:59:59.000' order by OwnerName";
 $stmt=sqlsrv_query($conn,$tsql,array(), array( "Scrollable" => SQLSRV_CURSOR_KEYSET )); 
 
-	echo '<div class="cl-common"style="width:500px; display: table;height:;float:left; border-top:1px solid ;">';
+	echo '<div class="cl-common"style="width:500px; display: table;height:;float:left; border-top:1px solid ;padding-top:1px">';
 	$i=1;
  for($row=1;$row = sqlsrv_fetch_array($stmt);$row++){//echo'<pre>';print_r($row);echo'</pre>';
 		//echo '<div class=""style="width:; height:;float:left; outline:1px solid red;margin-right:5px">';
@@ -69,9 +71,11 @@ echo '</div>';
 
 ?>
 <br/>
-<h3 style=color:green>Общее количество зарегистрированных жрунов </br>по заданоому времени</h3>
-<?='<b>от: </b>'.$date[0].' <b>до: </b>'.$date[1].'<br>';?>
-<a style="text-decoration:;font-size:17px;color:blue" href='dinner-link.php'>Текущие данные в реальном времени</a>
+<div style="margin:10px">
+	<h3 style=color:green>Общее количество зарегистрированных жрунов </br>по заданоому времени</h3>
+	<?='<b>от: </b>'.$date[0].' <b>до: </b>'.$date[1].'<br>';?>
+	<a style="text-decoration:;font-size:17px;color:blue" href='dinner-link.php'>Текущие данные в реальном времени</a>
+</div>
 </br>
 
 <div class=""style="position:fixed;top:5px;">

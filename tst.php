@@ -1,9 +1,19 @@
+
 <?php
-ini_set('date.timezone', 'Europe/Moscow');
-$date1 = date("H:i:s");
-echo $date1;
 
 
-#$html = $dom->saveHTML();
+print(12/5);
+
+?>
+<br/>
+<?php
+
+print(-12%5);
+
+?>
+
+<br/>
+<?php
+
 
 ?>

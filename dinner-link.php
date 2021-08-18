@@ -41,7 +41,15 @@ div.cl1{
 	
 	margin:auto;
 }
-		
+
+.footer-indent{
+	margin-bottom:20px;
+	
+}	
+.sec{
+	color:;
+	
+}	
         </style>
 
 		<script type="text/javascript">
@@ -67,7 +75,7 @@ for (var i=0; i<list_div.length; i++){
 include('F:\web\htdocs\st\head.php');
 
 $date=date('d.m.Y');
-$tsql="SELECT TOP 40 [TimeVal],Contents,Name,FirstName,MidName
+$tsql="SELECT TOP 777 [TimeVal],Contents,Name,FirstName,MidName
 FROM Orion.dbo.pLogData join Orion.dbo.pList on pLogData.HozOrgan=pList.ID join [Orion].[dbo].[Events] on pLogData.Event=Events.Event
 where DoorIndex='36' and Contents='Доступ предоставлен' and TimeVal >='$date' and TimeVal<='$date 23:59:59.000' order by TimeVal DESC";
 
@@ -75,14 +83,16 @@ where DoorIndex='36' and Contents='Доступ предоставлен' and TimeVal >='$date' an
 $stmt=sqlsrv_query($conn,$tsql,array(), array( "Scrollable" => SQLSRV_CURSOR_KEYSET )); 
 echo'</br>';
 echo 'Сегодня: '.$date;echo'</br>';
-#$records= 'Всего записей: '.sqlsrv_num_rows($stmt);
-#echo $records;
+$records= 'Всего записей: '.sqlsrv_num_rows($stmt);
+echo $records;
 echo'</br>';
 echo '<a style=text-decoration:;font-size:17px;color:blue href=dinner-card.php>Общее количество по заданному времени</a>';
 echo'</br>';
 echo '<a style=text-decoration:;font-size:17px;color:blue href=item.php>Одиночная запись</a>';
 echo'<br/>';
-echo date('H:i:s');
+echo '<a style=text-decoration:;font-size:17px;color:blue href=din-t.php>Количество по дням</a>';
+echo'<br/>';
+echo date("H:i:<b class=sec>s</b>");
 echo'</br>';//'10.01.2020'
 
 echo'</br>';
@@ -99,45 +109,35 @@ echo'</br>';
 	
 	echo '<div id="main"style="width:; height:;float:left; outline:;margin-right:5px">';
 
-	echo '<div id="cl-common"style="width:650px; height:;float:left; border:;">';
+	echo '<div id="cl-common"style="width:500px; height:;float:left; border:;">';
 	$i=1;
-			echo '<div id=""class="head-bl" style="width:630px; height:;float:; border:1px solid grey;">';
-			
-		echo'</div>';
-		
-	
-	
-	for($row=1;$row = sqlsrv_fetch_array($stmt);$row++)://echo'<pre>';print_r($row);echo'</pre>';
-		//echo count($row['OwnerName']);
 
 		
+	
+	
+	for($row=1;$row = sqlsrv_fetch_array($stmt);$row++){
+				
 		echo '<div class="cl"style="border-bottom:1px solid grey;border-right:1px solid;width:40px;height:;float:left;padding:px">';
 		echo $i++;
 		echo'</div>';
-
 		
 		echo'<div id=""class="cl nth" style="border-bottom:1px solid grey;width:300px;float:left;">';	
-				echo"<text>$row[Name] $row[FirstName] $row[MidName]		</text>";
+		echo"<text>$row[Name] $row[FirstName] $row[MidName]		</text>";
 		echo'</div>';
-
-		#elseif($row['Contents']=='Доступ отклонен'){
-		echo'<div class="cl" style="border-bottom:1px solid black;border-left:1px solid;width:150px;float:left;">';	
-		echo"<text>$row[Contents]		</text>";
-		echo'</div>';#}
-			
-		#elseif($row['Contents']=='Доступ отклонен'){
+		
 		echo'<div class="cl" style="border-right:1px solid green;border-bottom:1px solid green;border-left:1px solid green;width:140px;;float:left; ">';
 		echo $row['TimeVal']->format('d.m.Y / H:i');
-		echo'</div>';#}else{null;}
+		echo'</div>';
 		
 
-	endfor;
+	}
 		
 	
 
-
-	 echo '</div>';echo '</div>';
-
+	
+	 echo '</div>';echo '<div class=footer-indent></div>';echo '</div>';
+	
+	
 sqlsrv_free_stmt($stmt);  
 sqlsrv_close($conn);
 
@@ -146,3 +146,4 @@ sqlsrv_close($conn);
 
 
 </body>
+

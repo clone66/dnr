@@ -36,7 +36,7 @@ if($_SESSION["user_name"]) {
        
         $(document).ready(function(){   
             show();   
-           setInterval('show()',1000);   
+          setInterval('show()',1000);   
         });   
     </script> 
       

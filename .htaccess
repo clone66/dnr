@@ -1,6 +1,36 @@
 <RequireAll>
     Require all granted
-	Require ip 127.0.0.1 10.10.0.70 10.10.8.61
+	Require ip 127.0.0.1 10.10.0.70 10.10.8.214 10.10.0.179
 	#Require ip 10.10.8.61
     #Require not ip 10.10.8.0/22
 </RequireAll>
+#
+#Options -Indexes
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+	
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !\.php$
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}\.php -f
+	RewriteRule ^(.*)$ $1.php
+	
+	#RewriteRule ^dinner-card$ dinner-card.php [L]
+	
+	#RewriteCond %{REQUEST_FILENAME} !-d
+	#RewriteRule ^CodeP$ CodeP.php [NC,L]
+	
+	#RewriteCond %{HTTP_REFERER} .
+	#RewriteCond %{REMOTE_ADDR} 10.10.8.214
+	#RewriteRule .* - [F]
+	
+	#RewriteCond %{HTTP_USER_AGENT} android [NC]
+	#RewriteRule ^$ 404.php [R=301]
+	
+	#RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f	
+	#RewriteRule ^(.*)$ dinner-card.php?TimeVal=$1
+	
+</IfModule>
+
+
+#
+

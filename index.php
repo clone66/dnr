@@ -27,7 +27,7 @@
 <?php
 include('F:\web\htdocs\st\head.php');
 $date=date('d.m.Y');
-$tsql="SELECT  [Owner],[OwnerName]
+$tsql="SELECT top 100 [Owner],[OwnerName]
 FROM [Orion].[dbo].[pMark] where GroupID!=1";
 
 $stmt=sqlsrv_query($conn,$tsql,array(), array( "Scrollable" => SQLSRV_CURSOR_KEYSET )); 

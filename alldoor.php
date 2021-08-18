@@ -1,5 +1,11 @@
 <?php
+ini_set('display_errors',0);
+error_reporting(E_ALL);
+session_start();
 
+if(time()-$_SESSION["start"]>86400)
+session_destroy();
+if($_SESSION["user_name"]) {
 ?>
 <head>
 <title>
@@ -15,7 +21,7 @@
 
 }
 table{
-width: 830px;
+width: 930px;
 bordser-collapse:collapse;
 border-spacing:0
 }
@@ -35,7 +41,7 @@ height: 10px;
 		<link rel="stylesheet" type="text/css" href="css/tcal.css" />
 </head>
 <?php
-
+include('F:\web\htdocs\st\head.php');
 $CurrentDate=date('d.m.Y');    
 
 
@@ -56,11 +62,11 @@ $CurrentDate=date('d.m.Y');
 </script>
 
 <?php
-ini_set('display_errors',0);
-error_reporting(E_ALL);
+
 $id=$_GET['id'];
 $date=$_GET['TimeVal'];
-
+#fromdate=$_GET['TimeVal'];	format=1474156800
+#todate=$_GET['TimeVal'];	format=1474156900
 //var_dump($date);
 
 
@@ -69,6 +75,8 @@ $date=$_GET['TimeVal'];
 
 <?php
 //$_GET['HozOrgan']=$_GET['id'];
+
+
 ?>
 
 </br>
@@ -77,8 +85,12 @@ $date=$_GET['TimeVal'];
 <a href='/'>Список сотрудников</a>
 </br>
 <?php
+
+if($_SERVER['REMOTE_ADDR']=='10.10.0.175')
+	header('location:404.php');
+
 //and TimeVal >='$date' and TimeVal<='$date 23:59:59.000' 
-include('F:\web\htdocs\st\head.php');
+
 
 $tsql2="SELECT Name,FirstName,MidName,ID
 from dbo.pList order by Name";
@@ -88,7 +100,7 @@ $stmt2=sqlsrv_query($conn,$tsql2,array(), array( "Scrollable" => SQLSRV_CURSOR_K
 //$date=$_GET['TimeVal'];
 $tsql="SELECT ID,Remark,DoorIndex,TimeVal,HozOrgan,Name,FirstName,MidName
 FROM Orion.dbo.pLogData join Orion.dbo.pList on pLogData.HozOrgan=pList.ID
-where (DoorIndex=1 or DoorIndex=3 or DoorIndex=5 or DoorIndex=7 or DoorIndex=9 or DoorIndex=11 or DoorIndex=15 or DoorIndex=36 or DoorIndex=14 or DoorIndex=17) 
+where (DoorIndex=1 or DoorIndex=3 or DoorIndex=5 or DoorIndex=7 or DoorIndex=9 or DoorIndex=11 or DoorIndex=15 or DoorIndex=36 or DoorIndex=14 or DoorIndex=17 or DoorIndex=22) 
 and TimeVal >='$date[0]' and TimeVal<='$date[1] 23:59:59.000' and ID='$_GET[id]' order by TimeVal";
 
 /*
@@ -127,7 +139,7 @@ echo '<div class="common"style="width:100%;">
 	</div>';
 	
 
-	echo '<div class="cl-common"style="width:840px; display: table;height:;float:left; border-top:1px solid ;">';
+	echo '<div class="cl-common"style="width:940px; display: table;height:;float:left; border-top:1px solid ;">';
 	$i=1;
 	echo'<table>';
  for($row=1;$row = sqlsrv_fetch_array($stmt);$row++){//echo'<pre>';print_r($row);echo'</pre>';
@@ -140,20 +152,20 @@ echo '<div class="common"style="width:100%;">
 		echo'</td>';
 		
 		echo'<td class=cl style="border-bottom:1px solid black;width:300px;float:left;display:block;">';	
-		echo"<text>$row[Name] $row[FirstName] $row[MidName]		</text>";
+		echo"<text>$row[Name] $row[FirstName] $row[MidName]	</text>";
 		echo'</td>';
 		
 		echo'<td class=cl style="border-bottom:1px solid green;border-left:1px solid green;width:130px;;float:left;display:block; ">';
 		echo $row['TimeVal']->format('Y-m-d H:i');
 		echo'</td>';
 		
-		$str=preg_split('/ /',$row['Remark'],PREG_SPLIT_OFFSET_CAPTURE);
-		//$str=$str[3];
-		$str=explode(',',$str[3]);
-		echo'<td class=cl style="border-bottom:1px solid green;border-left:1px solid green;border-right:1px solid green;width:300px;;float:left;display:block; ">';
-		//echo'<pre>';print_r($str);echo'</pre>';
-		echo$str[0].$str[1];
-		//echo $row['Remark'];
+		//$str=preg_split('/ /',$row['Remark'],PREG_SPLIT_OFFSET_CAPTURE);
+		
+		//$str=explode(',',$str[3]);
+		echo'<td class=cl style="border-bottom:1px solid green;border-left:1px solid green;border-right:1px solid green;width:400px;;float:left;display:block; ">';
+	
+		//echo$str[0].$str[1];
+		echo $row['Remark'];
 		echo'</td>';
 		echo'</tr>';
 		//echo'<div class=cl style="border:1px solid green;width:47px;height:17px;;float:left;display:block; ">';
@@ -191,3 +203,10 @@ $row=mb_convert_encoding($row,"utf-8","Windows-1251");
 
 </form>
 </div>
+
+<?php
+
+
+
+}else header("Location:login.php");
+?>
